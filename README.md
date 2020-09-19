@@ -1,1 +1,3 @@
-# end_to_end_model_predictor
+# End to End Model Predictor
+
+This project is used to prediction the inference latency of end-to-end neural network.

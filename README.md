@@ -4,7 +4,7 @@ This project is used to prediction the inference latency of end-to-end neural ne
 
 Step 1. Generate the end-to-end model with different layers : 
 
-    python3 model_generator.py --min_layer 1 --max_layer 5
+    python3 network_generator.py --min_layer 1 --max_layer 5 -net_num 10000
 
 Step 2. Execute the end-to-end model: 
 

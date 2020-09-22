@@ -3,6 +3,7 @@
 
 #input
 possible_batch_size = [1, 2, 4, 8, 16, 32, 64, 128, 256]
+min_input_size = 32
 max_input_size = 512
 possible_input_channel = [1, 2, 3]
 #convolutional

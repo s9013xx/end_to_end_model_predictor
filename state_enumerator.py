@@ -196,22 +196,25 @@ class StateEnumerator:
             else:
                 return self.sample_terminate_state(state)
         else:
-            if state.layer_depth >= self.min_layer:
-                sampled_layer_type = random.randint(0, 3)
-            else:
-                sampled_layer_type = random.randint(0, 2)
-            # conv
-            if sampled_layer_type == 0:
-                current_state = self.sample_conv_state(state)
-            # pool
-            if sampled_layer_type == 1:
-                current_state = self.sample_pool_state(state)
-            # fc
-            if sampled_layer_type == 2:
+            if state.input_image_size <= 1:
                 current_state = self.sample_fc_state(state)
-            # terminate
-            if sampled_layer_type == 3:
-                current_state = self.sample_terminate_state(state)
+            else:
+                if state.layer_depth >= self.min_layer:
+                    sampled_layer_type = random.randint(0, 3)
+                else:
+                    sampled_layer_type = random.randint(0, 2)
+                # conv
+                if sampled_layer_type == 0:
+                    current_state = self.sample_conv_state(state)
+                # pool
+                if sampled_layer_type == 1:
+                    current_state = self.sample_pool_state(state)
+                # fc
+                if sampled_layer_type == 2:
+                    current_state = self.sample_fc_state(state)
+                # terminate
+                if sampled_layer_type == 3:
+                    current_state = self.sample_terminate_state(state)
 
             return current_state
 
@@ -222,7 +225,9 @@ class StateEnumerator:
         return new_size
 
     def _possible_conv_sizes(self, image_size):
-        return [conv for conv in self.ssp.possible_conv_kernel_size if conv < image_size]
+        possible_conv_kernel_size = [conv for conv in self.ssp.possible_conv_kernel_size if conv < image_size]
+        # print("image_size:", image_size, "possible_conv_kernel_size:", possible_conv_kernel_size)
+        return possible_conv_kernel_size
 
     def _possible_conv_strides(self, filter_size):
         return [stride for stride in self.ssp.possible_conv_stride if stride <= filter_size]
@@ -233,7 +238,9 @@ class StateEnumerator:
         return new_size
 
     def _possible_pool_sizes(self, image_size):
-        return [pool for pool in self.ssp.possible_pool_size if pool < image_size]
+        possible_pool_size = [pool for pool in self.ssp.possible_pool_size if pool < image_size]
+        # print("image_size:", image_size, "possible_pool_size:", possible_pool_size)
+        return possible_pool_size
 
     def _possible_pool_strides(self, filter_size):
         return [stride for stride in self.ssp.possible_pool_stride if stride <= filter_size]

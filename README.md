@@ -10,9 +10,11 @@ Step 2. Execute the end-to-end model:
 
     python3 network_executor.py --min_layer 1 --max_layer 7 -net_num 10000
 
-Step 3. Transform the features for model training : 
+Step 3. Transform the features to one-hot for model training : 
 
-    python3 feature_transformer.py
+    python network_extractor.py --min_layer 1 --max_layer 7 -net_num 10000
+
+    python network_features_to_one_hot.py --min_layer 1 --max_layer 7 -net_num 10000
 
 Step 4. Train the end-to-end model inference latency predictor : 
 
